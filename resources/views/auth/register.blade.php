@@ -1,61 +1,105 @@
 @extends('layouts.auth')
 
-@section('title', 'Register')
+@section('title', __('register_title'))
 
 @section('content')
-    <h4 class="text-center mb-4">Create Account</h4>
+
+    <span class="auth-badge">{{ __('new_account') }}</span>
+    <h3>{{ __('create_account') }}</h3>
+    <p class="auth-subtitle">{{ __('register_subtitle') }}</p>
+
+    @if ($errors->any())
+        <div class="alert alert-danger py-2 mb-3 small">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form action="{{ route('register') }}" method="POST">
         @csrf
-        <div class="mb-3">
-            <label class="form-label small fw-bold">Full Name</label>
-            <input type="text" name="full_name" class="form-control" placeholder="Firstname Lastname" required>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label small fw-bold">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="user123" required>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label small fw-bold">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="email@gov.tk" required>
-            </div>
-        </div>
 
         <div class="mb-3">
-            <label class="form-label small fw-bold">Department</label>
-            <select name="department_id" class="form-select" required>
-                @foreach (\App\Models\Department::all() as $dept)
-                    <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                @endforeach
-            </select>
+            <label class="field-label">{{ __('full_name') }}</label>
+            <div class="input-icon-wrap">
+                <i class="bi bi-person field-icon"></i>
+                <input type="text" name="full_name" class="form-control"
+                    placeholder="{{ __('full_name_placeholder') }}" value="{{ old('full_name') }}" required>
+            </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label small fw-bold">Password</label>
-                <input type="password" name="password" class="form-control" required>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="field-label">{{ __('username') }}</label>
+                <div class="input-icon-wrap">
+                    <i class="bi bi-at field-icon"></i>
+                    <input type="text" name="username" class="form-control"
+                        placeholder="{{ __('username_reg_placeholder') }}" value="{{ old('username') }}" required>
+                </div>
             </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label small fw-bold">Confirm</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
+            <div class="col-md-6">
+                <label class="field-label">{{ __('email') }}</label>
+                <div class="input-icon-wrap">
+                    <i class="bi bi-envelope field-icon"></i>
+                    <input type="email" name="email" class="form-control"
+                        placeholder="{{ __('email_placeholder') }}" value="{{ old('email') }}" required>
+                </div>
             </div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label small fw-bold">Interface Language</label>
-            <select name="preferred_lang" class="form-select">
-                <option value="tk">Türkmençe</option>
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-            </select>
+            <label class="field-label">{{ __('department') }}</label>
+            <div class="input-icon-wrap">
+                <i class="bi bi-building field-icon"></i>
+                <select name="department_id" class="form-select" required>
+                    <option value="" disabled selected>{{ __('select_department') }}</option>
+                    @foreach (\App\Models\Department::all() as $dept)
+                        <option value="{{ $dept->id }}" {{ old('department_id') == $dept->id ? 'selected' : '' }}>
+                            {{ $dept->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 btn-auth mb-3">Register</button>
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="field-label">{{ __('password') }}</label>
+                <div class="input-icon-wrap">
+                    <i class="bi bi-lock field-icon"></i>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="field-label">{{ __('confirm_password') }}</label>
+                <div class="input-icon-wrap">
+                    <i class="bi bi-lock-fill field-icon"></i>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="••••••••"
+                        required>
+                </div>
+            </div>
+        </div>
 
-        <p class="text-center small mb-0">
-            Already registered? <a href="{{ route('login') }}" class="text-primary fw-bold">Login here</a>
+        <div class="mb-3">
+            <label class="field-label">{{ __('interface_language') }}</label>
+            <div class="input-icon-wrap">
+                <i class="bi bi-globe field-icon"></i>
+                <select name="preferred_lang" class="form-select">
+                    <option value="tk" {{ old('preferred_lang') == 'tk' ? 'selected' : '' }}>Türkmençe</option>
+                    <option value="ru" {{ old('preferred_lang') == 'ru' ? 'selected' : '' }}>Русский</option>
+                    <option value="en" {{ old('preferred_lang') == 'en' ? 'selected' : '' }}>English</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-auth-primary">{{ __('create_account_btn') }}</button>
+
+        <p class="auth-divider">{{ __('already_registered') }}</p>
+        <p class="auth-switch">
+            <a href="{{ route('login') }}">{{ __('sign_in_here') }} →</a>
         </p>
     </form>
+
 @endsection
