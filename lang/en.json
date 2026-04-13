@@ -63,5 +63,7 @@
     "Confirm New Password": "Confirm New Password",
     "Change Password": "Change Password",
     "Member Since": "Member Since",
-    "Current password does not match": "Current password does not match"
+    "Current password does not match": "Current password does not match",
+    "All rights reserved.": "All rights reserved.",
+    "Developed by": "Developed by"
 }

@@ -34,11 +34,17 @@
                 class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}">
                 <i class="bi bi-building-fill"></i> {{ __('Departments') }}
             </a>
-            
+
             <a href="{{ route('admin.logs') }}"
                 class="nav-link {{ request()->routeIs('admin.logs') ? 'active' : '' }}">
                 <i class="bi bi-journal-text"></i> {{ __('System Logs') }}
             </a>
         @endif
     </nav>
+    <!-- Inside your sidebar div, at the very bottom -->
+    <div class="mt-auto p-3 text-center border-top border-secondary opacity-50">
+        <a href="https://mad808.github.io/" target="_blank" class="text-white text-decoration-none small dev-signature">
+            <i class="bi bi-cpu me-1"></i> Core v1.0 by mad808
+        </a>
+    </div>
 </div>
